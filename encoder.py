@@ -10,8 +10,8 @@ import json
 import base64
 import sys
 
-saltFileName = ".encoderFileSalt"
-#saltFileName = "/Volumes/SALT/.encoderFileSalt"
+#saltFileName = ".encoderFileSalt"
+saltFileName = "/Volumes/SALT/.encoderFileSalt"
 
 
 def loadSalt():
