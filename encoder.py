@@ -10,7 +10,8 @@ import json
 import base64
 import sys
 
-saltFileName = "/Volumes/SALT/.encoderFileSalt"
+saltFileName = ".encoderFileSalt"
+#saltFileName = "/Volumes/SALT/.encoderFileSalt"
 
 
 def loadSalt():
@@ -109,4 +110,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Au revoir")
+        sys.exit(0)
