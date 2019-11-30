@@ -57,33 +57,25 @@ def exist(location):
 
 
 def decodeGen(psd, fichier):
-    if not exist(fichier):
-        print("try to load a file but it does not exist")
-        sys.exit(0)
-    else:
-        with open(fichier, "rb") as file:
-            crypted = file.read()
-        try:
-            data = decrypt(crypted, psd)
-            k = getKey(psd, loadSalt())
-            with open(fichier, 'wb') as file:
-                file.write(data)
-        except InvalidToken:
-            print("     *****     Invalid password     *****     ")
-            sys.exit(0)
-
-
-def encodeGen(psd, fichier):
-    if not exist(fichier):
-        print("try to load a file but it does not exist")
-        sys.exit(0)
-    else:
-        with open(fichier, "rb") as file:
-            decrypted = file.read()
-        data = encrypt(decrypted, psd)
+    with open(fichier, "rb") as file:
+        crypted = file.read()
+    try:
+        data = decrypt(crypted, psd)
         k = getKey(psd, loadSalt())
         with open(fichier, 'wb') as file:
             file.write(data)
+    except InvalidToken:
+        print("     *****     Invalid password     *****     ")
+        sys.exit(0)
+
+
+def encodeGen(psd, fichier):
+    with open(fichier, "rb") as file:
+        decrypted = file.read()
+    data = encrypt(decrypted, psd)
+    k = getKey(psd, loadSalt())
+    with open(fichier, 'wb') as file:
+        file.write(data)
 
 
 def askPasswordForKey():
@@ -97,12 +89,16 @@ def main():
     if not exist(saltFileName):
         print("cant find the salt file")
     elif len(sys.argv) == 3:
+        fichier = sys.argv[2]
+        if not exist(fichier):
+            print("the file %s doesn't exist" % fichier)
+            sys.exit(0)
         if sys.argv[1] == "decode":
             psd = askPasswordForKey()
-            decodeGen(psd, sys.argv[2])
+            decodeGen(psd, fichier)
         elif sys.argv[1] == "encode":
             psd = askPasswordForKey()
-            encodeGen(psd, sys.argv[2])
+            encodeGen(psd, fichier)
         else:
             raise ValueError("Invalid argument")
     else:
