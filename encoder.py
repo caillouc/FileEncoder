@@ -17,7 +17,7 @@ saltFileName = "/Volumes/SALT/.encoderFileSalt"
 def loadSalt():
     """ Load the salt file from the flash drive """
     if not exist(saltFileName):
-        print("try to salt save but it does not exist")
+        print("try to load salt but it does not exist")
         sys.exit(0)
     else:
         with open(saltFileName, "rb") as file:
@@ -80,9 +80,21 @@ def encodeGen(psd, fichier):
 
 def askPasswordForKey():
     """ Ask for the decode password """
-    print("\n * Enter the decoding password * ")
-    temp = getpass.getpass()
-    return temp.encode()
+    temp = ""
+    check = "check"
+    counter = 0
+    while (temp != check and counter < 3):
+        if (counter != 0):
+            print("\n*****     The two password are different     *****\n")
+        print(" * Enter an encoding password * ")
+        temp = getpass.getpass()
+        print("\n * Type it again * ")
+        check = getpass.getpass()
+        counter += 1
+    if (temp == check):
+        return temp.encode()
+    else:
+        sys.exit(0)
 
 
 def main():
