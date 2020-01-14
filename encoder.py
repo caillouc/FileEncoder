@@ -106,8 +106,9 @@ def main():
             print("the file %s doesn't exist" % fichier)
             sys.exit(0)
         if sys.argv[1] == "decode":
-            psd = askPasswordForKey()
-            decodeGen(psd, fichier)
+            print(" * Enter the decoding password * ")
+            psd = getpass.getpass()
+            decodeGen(psd.encode(), fichier)
         elif sys.argv[1] == "encode":
             psd = askPasswordForKey()
             encodeGen(psd, fichier)
