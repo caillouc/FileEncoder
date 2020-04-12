@@ -9,7 +9,7 @@ This repository allows you to encode files using a password.
 * Then run the following command to install necessary packages.
 
 ```zsh
-pip3 install ... 
+pip3 install cryptography
 ```
 
 * Once it is done, you first need to generate a salt. To do that, run the following command in the folder `fileEncoder` :
@@ -73,3 +73,7 @@ encode PATH/TO/file
 ```zsh
 decode PATH/TO/file
 ```
+
+---
+
+**Be careful : once you have encoded a file, if you lose the password or if you delete the file `.encoderFileSalt` you won't be able to recover it**
